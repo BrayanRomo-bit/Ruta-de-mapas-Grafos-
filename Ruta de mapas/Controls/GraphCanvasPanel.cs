@@ -3,11 +3,11 @@ using System.Windows.Forms;
 namespace Ruta_de_mapas
 {
     /// <summary>
-    /// Panel con doble búfer activado para renderizado gráfico fluido y sin parpadeo (flickering).
+    /// Double-buffered panel for smooth, flicker-free graph rendering.
     /// </summary>
-    public class DoubleBufferedPanel : Panel
+    public class GraphCanvasPanel : Panel
     {
-        public DoubleBufferedPanel()
+        public GraphCanvasPanel()
         {
             DoubleBuffered = true;
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
