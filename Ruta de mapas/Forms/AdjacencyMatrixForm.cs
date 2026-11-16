@@ -38,7 +38,7 @@ namespace Ruta_de_mapas
             string directedLabel = isDirected ? "Grafo Dirigido" : "Grafo No Dirigido";
             this.Text = $"Matriz de Adyacencia ({directedLabel}) - [{structureName}]";
 
-            lblMatrixInfo.Text = $"📌 MATRIZ DE ADYACENCIA [{structureName}]: \n• Celda con '1': Arista no ponderada (simple).\n• Celda con número: Arista ponderada con su peso. \n• Celda con '0': Sin arista. Matriz {(isDirected ? "asimétrica" : "simétrica")}.";
+            lblMatrixInfo.Text = $"MATRIZ DE ADYACENCIA [{structureName}]: \n• Celda con '1': Arista no ponderada (simple).\n• Celda con número: Arista ponderada con su peso. \n• Celda con '0': Sin arista. Matriz {(isDirected ? "asimétrica" : "simétrica")}.";
 
             for (int i = 0; i < vertexNames.Length; i++)
             {
@@ -55,20 +55,8 @@ namespace Ruta_de_mapas
                     string value = adjacencyMatrix[i, j];
                     dgvAdjacencyMatrix.Rows[rowIndex].Cells[j].Value = value;
 
-                    if (value == "0")
+                    if (value != "0")
                     {
-                        dgvAdjacencyMatrix.Rows[rowIndex].Cells[j].Style.ForeColor = Color.FromArgb(148, 163, 184);
-                    }
-                    else if (value == "1")
-                    {
-                        dgvAdjacencyMatrix.Rows[rowIndex].Cells[j].Style.BackColor = UnweightedCellColor;
-                        dgvAdjacencyMatrix.Rows[rowIndex].Cells[j].Style.ForeColor = UnweightedTextColor;
-                        dgvAdjacencyMatrix.Rows[rowIndex].Cells[j].Style.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-                    }
-                    else
-                    {
-                        dgvAdjacencyMatrix.Rows[rowIndex].Cells[j].Style.BackColor = WeightedCellColor;
-                        dgvAdjacencyMatrix.Rows[rowIndex].Cells[j].Style.ForeColor = WeightedTextColor;
                         dgvAdjacencyMatrix.Rows[rowIndex].Cells[j].Style.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
                     }
                 }

@@ -178,8 +178,8 @@ namespace Ruta_de_mapas
             LogEvent(LogCategories.GraphType, $"Modo de dirección cambiado a: {directionModeText}.");
 
             highlightedEdge = null;
-            lblAdjacencyResult.BackColor = VisualConfig.NeutralResultBackgroundColor;
-            lblAdjacencyResult.ForeColor = VisualConfig.NeutralResultTextColor;
+            lblAdjacencyResult.BackColor = Color.White;
+            lblAdjacencyResult.ForeColor = Color.Black;
             lblAdjacencyResult.Text = $"Grafo configurado como {directionModeText}.";
 
             panelGraphCanvas.Invalidate();
@@ -299,7 +299,7 @@ namespace Ruta_de_mapas
                 LogEvent(LogCategories.Deletion, message);
                 if (orphanedEdges > 0)
                 {
-                    LogEvent(LogCategories.Orphaned, $"🛡️ Se eliminaron automáticamente {orphanedEdges} aristas huérfanas conectadas a '{vertexName}'.");
+                    LogEvent(LogCategories.Orphaned, $"Se eliminaron automáticamente {orphanedEdges} aristas huérfanas conectadas a '{vertexName}'.");
                 }
 
                 if (selectedVertex != null && string.Equals(selectedVertex.Name, vertexName, StringComparison.OrdinalIgnoreCase)) selectedVertex = null;
@@ -353,16 +353,16 @@ namespace Ruta_de_mapas
 
             if (areAdjacent)
             {
-                lblAdjacencyResult.BackColor = VisualConfig.PositiveResultBackgroundColor;
-                lblAdjacencyResult.ForeColor = VisualConfig.PositiveResultTextColor;
-                lblAdjacencyResult.Text = $"✅ {message}";
+                lblAdjacencyResult.BackColor = Color.White;
+                lblAdjacencyResult.ForeColor = Color.Black;
+                lblAdjacencyResult.Text = message;
                 LogEvent(LogCategories.Adjacency, message);
             }
             else
             {
-                lblAdjacencyResult.BackColor = VisualConfig.NegativeResultBackgroundColor;
-                lblAdjacencyResult.ForeColor = VisualConfig.NegativeResultTextColor;
-                lblAdjacencyResult.Text = $"❌ {message}";
+                lblAdjacencyResult.BackColor = Color.White;
+                lblAdjacencyResult.ForeColor = Color.Black;
+                lblAdjacencyResult.Text = message;
                 LogEvent(LogCategories.Adjacency, message);
             }
 
@@ -378,9 +378,9 @@ namespace Ruta_de_mapas
 
             if (adjacents.Count == 0)
             {
-                lblAdjacencyResult.BackColor = VisualConfig.NeutralResultBackgroundColor;
-                lblAdjacencyResult.ForeColor = VisualConfig.NeutralResultTextColor;
-                lblAdjacencyResult.Text = $"ℹ️ El vértice '{vertexName}' no tiene vértices adyacentes.";
+                lblAdjacencyResult.BackColor = Color.White;
+                lblAdjacencyResult.ForeColor = Color.Black;
+                lblAdjacencyResult.Text = $"El vértice '{vertexName}' no tiene vértices adyacentes.";
             }
             else
             {
@@ -400,10 +400,10 @@ namespace Ruta_de_mapas
 
                 string joinedList = string.Join(", ", adjacentTexts);
 
-                lblAdjacencyResult.BackColor = VisualConfig.PositiveResultBackgroundColor;
-                lblAdjacencyResult.ForeColor = VisualConfig.PositiveResultTextColor;
+                lblAdjacencyResult.BackColor = Color.White;
+                lblAdjacencyResult.ForeColor = Color.Black;
                 string relationType = ActiveGraph.IsDirected ? "Sucesores (salientes)" : "Vecinos";
-                lblAdjacencyResult.Text = $"👥 {relationType} de '{vertexName}' ({adjacents.Count}):\n{joinedList}";
+                lblAdjacencyResult.Text = $"{relationType} de '{vertexName}' ({adjacents.Count}):\n{joinedList}";
                 LogEvent(LogCategories.Neighbors, $"{relationType} de '{vertexName}': [{joinedList}].");
             }
         }

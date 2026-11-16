@@ -32,8 +32,8 @@ namespace Ruta_de_mapas
             this.Text = $"Lista de Adyacencia ({directedLabel} - {weightedLabel}) - [{structureName}]";
 
             lblAdjacencyListInfo.Text = isWeighted
-                ? $"📌 LISTA DE ADYACENCIA PONDERADA [{structureName}]: Estructura donde cada vértice origen contiene la lista de sus adyacentes con sus respectivos pesos [ Vecino | Peso: W ]."
-                : $"📌 LISTA DE ADYACENCIA SIMPLE [{structureName}]: Estructura donde cada vértice contiene la lista de sus vértices adyacentes directos [ Vecino ].";
+                ? $"LISTA DE ADYACENCIA PONDERADA [{structureName}]: Estructura donde cada vértice origen contiene la lista de sus adyacentes con sus respectivos pesos [ Vecino | Peso: W ]."
+                : $"LISTA DE ADYACENCIA SIMPLE [{structureName}]: Estructura donde cada vértice contiene la lista de sus vértices adyacentes directos [ Vecino ].";
 
             for (int i = 0; i < adjacencyList.Count; i++)
             {
@@ -46,12 +46,12 @@ namespace Ruta_de_mapas
                 if (entry.Adjacents.Count > 0)
                 {
                     dgvAdjacencyList.Rows[rowIndex].Cells[0].Style.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-                    dgvAdjacencyList.Rows[rowIndex].Cells[0].Style.ForeColor = Color.FromArgb(9, 132, 227);
-                    dgvAdjacencyList.Rows[rowIndex].Cells[2].Style.ForeColor = Color.FromArgb(20, 90, 50);
+                    dgvAdjacencyList.Rows[rowIndex].Cells[0].Style.ForeColor = Color.Black;
+                    dgvAdjacencyList.Rows[rowIndex].Cells[2].Style.ForeColor = Color.Black;
                 }
                 else
                 {
-                    dgvAdjacencyList.Rows[rowIndex].Cells[2].Style.ForeColor = Color.FromArgb(148, 163, 184);
+                    dgvAdjacencyList.Rows[rowIndex].Cells[2].Style.ForeColor = Color.Black;
                 }
             }
         }

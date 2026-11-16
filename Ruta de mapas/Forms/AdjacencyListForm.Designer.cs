@@ -104,15 +104,15 @@ namespace Ruta_de_mapas
             // 
             // btnViewAdjacencyMatrix
             // 
-            btnViewAdjacencyMatrix.BackColor = Color.FromArgb(0, 184, 148);
+            btnViewAdjacencyMatrix.BackColor = SystemColors.Control;
             btnViewAdjacencyMatrix.Cursor = Cursors.Hand;
             btnViewAdjacencyMatrix.Dock = DockStyle.Right;
-            btnViewAdjacencyMatrix.FlatStyle = FlatStyle.Flat;
+            btnViewAdjacencyMatrix.FlatStyle = FlatStyle.Standard;
             btnViewAdjacencyMatrix.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            btnViewAdjacencyMatrix.ForeColor = Color.White;
+            btnViewAdjacencyMatrix.ForeColor = SystemColors.ControlText;
             btnViewAdjacencyMatrix.Name = "btnViewAdjacencyMatrix";
-            btnViewAdjacencyMatrix.Text = "📊 Ver Matriz de Adyacencia";
-            btnViewAdjacencyMatrix.UseVisualStyleBackColor = false;
+            btnViewAdjacencyMatrix.Text = "Ver Matriz de Adyacencia";
+            btnViewAdjacencyMatrix.UseVisualStyleBackColor = true;
             btnViewAdjacencyMatrix.Width = 200;
             // 
             // AdjacencyListForm

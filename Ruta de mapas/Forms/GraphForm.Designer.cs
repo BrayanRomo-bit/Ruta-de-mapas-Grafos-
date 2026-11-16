@@ -206,7 +206,7 @@ namespace Ruta_de_mapas
             // grpGraphAdjacency
             // 
             grpGraphAdjacency.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            grpGraphAdjacency.BackColor = Color.FromArgb(248, 252, 248);
+            grpGraphAdjacency.BackColor = Color.White;
             grpGraphAdjacency.Controls.Add(lblAdjacencyResult);
             grpGraphAdjacency.Controls.Add(btnViewAdjacents);
             grpGraphAdjacency.Controls.Add(btnCheckAdjacency);
@@ -226,10 +226,10 @@ namespace Ruta_de_mapas
             // lblAdjacencyResult
             // 
             lblAdjacencyResult.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            lblAdjacencyResult.BackColor = Color.FromArgb(238, 242, 245);
+            lblAdjacencyResult.BackColor = Color.White;
             lblAdjacencyResult.BorderStyle = BorderStyle.FixedSingle;
             lblAdjacencyResult.Font = new Font("Segoe UI", 9F);
-            lblAdjacencyResult.ForeColor = Color.FromArgb(45, 52, 54);
+            lblAdjacencyResult.ForeColor = Color.Black;
             lblAdjacencyResult.Location = new Point(11, 130);
             lblAdjacencyResult.Name = "lblAdjacencyResult";
             lblAdjacencyResult.Padding = new Padding(6);
@@ -241,33 +241,33 @@ namespace Ruta_de_mapas
             // btnViewAdjacents
             // 
             btnViewAdjacents.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnViewAdjacents.BackColor = Color.FromArgb(99, 110, 114);
+            btnViewAdjacents.BackColor = SystemColors.Control;
             btnViewAdjacents.Cursor = Cursors.Hand;
-            btnViewAdjacents.FlatStyle = FlatStyle.Flat;
+            btnViewAdjacents.FlatStyle = FlatStyle.Standard;
             btnViewAdjacents.Font = new Font("Segoe UI Semibold", 8.25F, FontStyle.Bold);
-            btnViewAdjacents.ForeColor = Color.White;
+            btnViewAdjacents.ForeColor = SystemColors.ControlText;
             btnViewAdjacents.Location = new Point(190, 80);
             btnViewAdjacents.Margin = new Padding(3, 4, 3, 4);
             btnViewAdjacents.Name = "btnViewAdjacents";
             btnViewAdjacents.Size = new Size(160, 40);
             btnViewAdjacents.TabIndex = 3;
             btnViewAdjacents.Text = "Obtener Adyacentes";
-            btnViewAdjacents.UseVisualStyleBackColor = false;
+            btnViewAdjacents.UseVisualStyleBackColor = true;
             // 
             // btnCheckAdjacency
             // 
-            btnCheckAdjacency.BackColor = Color.FromArgb(0, 184, 148);
+            btnCheckAdjacency.BackColor = SystemColors.Control;
             btnCheckAdjacency.Cursor = Cursors.Hand;
-            btnCheckAdjacency.FlatStyle = FlatStyle.Flat;
+            btnCheckAdjacency.FlatStyle = FlatStyle.Standard;
             btnCheckAdjacency.Font = new Font("Segoe UI Semibold", 8.25F, FontStyle.Bold);
-            btnCheckAdjacency.ForeColor = Color.White;
+            btnCheckAdjacency.ForeColor = SystemColors.ControlText;
             btnCheckAdjacency.Location = new Point(11, 80);
             btnCheckAdjacency.Margin = new Padding(3, 4, 3, 4);
             btnCheckAdjacency.Name = "btnCheckAdjacency";
             btnCheckAdjacency.Size = new Size(160, 40);
             btnCheckAdjacency.TabIndex = 2;
             btnCheckAdjacency.Text = "Verificar Adyacencia";
-            btnCheckAdjacency.UseVisualStyleBackColor = false;
+            btnCheckAdjacency.UseVisualStyleBackColor = true;
             // 
             // cmbAdjacencyVertexB
             // 
@@ -295,7 +295,7 @@ namespace Ruta_de_mapas
             // grpGraphDeletion
             // 
             grpGraphDeletion.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            grpGraphDeletion.BackColor = Color.FromArgb(254, 248, 248);
+            grpGraphDeletion.BackColor = Color.White;
             grpGraphDeletion.Controls.Add(btnRemoveEdge);
             grpGraphDeletion.Controls.Add(cmbRemoveEdgeDestination);
             grpGraphDeletion.Controls.Add(cmbRemoveEdgeOrigin);
@@ -539,50 +539,50 @@ namespace Ruta_de_mapas
             // btnClearGraph
             // 
             btnClearGraph.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnClearGraph.BackColor = Color.FromArgb(214, 48, 49);
+            btnClearGraph.BackColor = SystemColors.Control;
             btnClearGraph.Cursor = Cursors.Hand;
-            btnClearGraph.FlatStyle = FlatStyle.Flat;
+            btnClearGraph.FlatStyle = FlatStyle.Standard;
             btnClearGraph.Font = new Font("Segoe UI Semibold", 8.5F, FontStyle.Bold);
-            btnClearGraph.ForeColor = Color.White;
+            btnClearGraph.ForeColor = SystemColors.ControlText;
             btnClearGraph.Location = new Point(1124, 13);
             btnClearGraph.Margin = new Padding(3, 4, 3, 4);
             btnClearGraph.Name = "btnClearGraph";
             btnClearGraph.Size = new Size(95, 40);
             btnClearGraph.TabIndex = 5;
-            btnClearGraph.Text = "\U0001f9f9 Vaciar";
-            btnClearGraph.UseVisualStyleBackColor = false;
+            btnClearGraph.Text = "Vaciar";
+            btnClearGraph.UseVisualStyleBackColor = true;
             // 
             // btnViewAdjacencyList
             // 
             btnViewAdjacencyList.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnViewAdjacencyList.BackColor = Color.FromArgb(108, 92, 231);
+            btnViewAdjacencyList.BackColor = SystemColors.Control;
             btnViewAdjacencyList.Cursor = Cursors.Hand;
-            btnViewAdjacencyList.FlatStyle = FlatStyle.Flat;
+            btnViewAdjacencyList.FlatStyle = FlatStyle.Standard;
             btnViewAdjacencyList.Font = new Font("Segoe UI Semibold", 8.5F, FontStyle.Bold);
-            btnViewAdjacencyList.ForeColor = Color.White;
+            btnViewAdjacencyList.ForeColor = SystemColors.ControlText;
             btnViewAdjacencyList.Location = new Point(1005, 13);
             btnViewAdjacencyList.Margin = new Padding(3, 4, 3, 4);
             btnViewAdjacencyList.Name = "btnViewAdjacencyList";
             btnViewAdjacencyList.Size = new Size(112, 40);
             btnViewAdjacencyList.TabIndex = 4;
-            btnViewAdjacencyList.Text = "📋 Lista";
-            btnViewAdjacencyList.UseVisualStyleBackColor = false;
+            btnViewAdjacencyList.Text = "Lista";
+            btnViewAdjacencyList.UseVisualStyleBackColor = true;
             // 
             // btnViewAdjacencyMatrix
             // 
             btnViewAdjacencyMatrix.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnViewAdjacencyMatrix.BackColor = Color.FromArgb(9, 132, 227);
+            btnViewAdjacencyMatrix.BackColor = SystemColors.Control;
             btnViewAdjacencyMatrix.Cursor = Cursors.Hand;
-            btnViewAdjacencyMatrix.FlatStyle = FlatStyle.Flat;
+            btnViewAdjacencyMatrix.FlatStyle = FlatStyle.Standard;
             btnViewAdjacencyMatrix.Font = new Font("Segoe UI Semibold", 8.5F, FontStyle.Bold);
-            btnViewAdjacencyMatrix.ForeColor = Color.White;
+            btnViewAdjacencyMatrix.ForeColor = SystemColors.ControlText;
             btnViewAdjacencyMatrix.Location = new Point(885, 13);
             btnViewAdjacencyMatrix.Margin = new Padding(3, 4, 3, 4);
             btnViewAdjacencyMatrix.Name = "btnViewAdjacencyMatrix";
             btnViewAdjacencyMatrix.Size = new Size(113, 40);
             btnViewAdjacencyMatrix.TabIndex = 3;
-            btnViewAdjacencyMatrix.Text = "📊 Matriz";
-            btnViewAdjacencyMatrix.UseVisualStyleBackColor = false;
+            btnViewAdjacencyMatrix.Text = "Matriz";
+            btnViewAdjacencyMatrix.UseVisualStyleBackColor = true;
             // 
             // panelGraphStructure
             // 
