@@ -35,6 +35,9 @@ namespace Ruta_de_mapas
         // Click position selected for the next vertex
         private Point? nextVertexClickPosition = null;
 
+        // Last BFS/DFS traversal executed (null = no traversal marks on the canvas)
+        private TraversalResult? traversalResult = null;
+
         public GraphForm()
         {
             InitializeComponent();
@@ -84,6 +87,12 @@ namespace Ruta_de_mapas
 
             btnCheckAdjacency.Click += BtnCheckAdjacency_Click;
             btnViewAdjacents.Click += BtnViewAdjacents_Click;
+
+            // Traversals (BFS / DFS)
+            btnBfs.Click += (sender, e) => RunTraversal(useBfs: true);
+            btnDfs.Click += (sender, e) => RunTraversal(useBfs: false);
+            btnClearTraversal.Click += (sender, e) => ClearTraversalMarks();
+            cmbTraversalOrigin.SelectedIndexChanged += (sender, e) => ClearTraversalMarks();
         }
 
         private void GraphForm_Load(object? sender, EventArgs e)
@@ -182,6 +191,7 @@ namespace Ruta_de_mapas
             lblAdjacencyResult.ForeColor = Color.Black;
             lblAdjacencyResult.Text = $"Grafo configurado como {directionModeText}.";
 
+            ClearTraversalMarks();   // a traversal result depends on whether the graph is directed
             panelGraphCanvas.Invalidate();
         }
 
@@ -408,6 +418,62 @@ namespace Ruta_de_mapas
             }
         }
 
+        // ===================== Traversals (BFS / DFS) =====================
+
+        private void RunTraversal(bool useBfs)
+        {
+            if (ActiveGraph.VertexCount == 0)
+            {
+                MessageBox.Show("Add at least one vertex before traversing the graph.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string originName = cmbTraversalOrigin.Text;
+            if (string.IsNullOrEmpty(originName))
+            {
+                MessageBox.Show("Select the origin vertex of the traversal.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // The origin is the vertex selected in cmbTraversalOrigin (by default, the first vertex created)
+            TraversalResult result = useBfs ? TravesalAlgorithms.Bfs(ActiveGraph, originName) : TravesalAlgorithms.Dfs(ActiveGraph, originName);
+            traversalResult = result;
+
+            // One-line result in the canvas footer
+            lblTraversalStatus.Text = $"{result.Type} from {result.Origin}: {string.Join(" → ", result.Order)}";
+
+            // Full detail in the log
+            string graphKind = ActiveGraph.IsDirected ? "directed" : "undirected";
+            string details = $"{result.Type} from '{result.Origin}' ({graphKind} graph) | Order: {string.Join(", ", result.Order)}";
+            if (result.Distances != null)
+            {
+                details += " | Distances: " + string.Join(", ", result.Order.ConvertAll(name => $"{name}={result.Distances[name]}"));
+            }
+            if (result.Unreached.Count > 0)
+            {
+                details += $" | Unreached: {string.Join(", ", result.Unreached)}";
+            }
+            LogEvent(LogCategories.Traversal, details);
+
+            panelGraphCanvas.Invalidate();
+        }
+
+        private void ClearTraversalMarks()
+        {
+            traversalResult = null;
+            UpdateTraversalOriginText();
+            panelGraphCanvas.Invalidate();
+        }
+
+        private void UpdateTraversalOriginText()
+        {
+            lblTraversalStatus.Text = string.IsNullOrEmpty(cmbTraversalOrigin.Text)
+                ? "Traversals: add vertices (the default origin is the first one)."
+                : $"Traversal origin: {cmbTraversalOrigin.Text}. Choose BFS or DFS.";
+        }
+
+
+
         private void PanelGraphCanvas_Paint(object? sender, PaintEventArgs e)
         {
             Graphics graphics = e.Graphics;
@@ -491,6 +557,7 @@ namespace Ruta_de_mapas
                 }
 
                 DrawVertexLabel(graphics, vertex, isSelected || isVerified);
+                DrawTraversalMarks(graphics, vertex);
             }
         }
 
@@ -596,6 +663,68 @@ namespace Ruta_de_mapas
             }
         }
 
+        // Amber ring + "ORIGIN" tag on the origin vertex (always visible) and, after a traversal,
+        // a badge with the visit order and (BFS only) the distance "d=n" from the origin.
+        private void DrawTraversalMarks(Graphics graphics, Vertex vertex)
+        {
+            int radius = vertex.Radius;
+
+            // 1) Traversal origin
+            if (string.Equals(vertex.Name, cmbTraversalOrigin.Text, StringComparison.OrdinalIgnoreCase))
+            {
+                using (Pen ringPen = new Pen(VisualConfig.OriginRingColor, 3.5f))
+                {
+                    graphics.DrawEllipse(ringPen, vertex.X - radius - 5, vertex.Y - radius - 5, (radius + 5) * 2, (radius + 5) * 2);
+                }
+
+                using (Font font = new Font("Segoe UI", 7.5F, FontStyle.Bold))
+                using (SolidBrush tagBrush = new SolidBrush(VisualConfig.OriginRingColor))
+                using (SolidBrush textBrush = new SolidBrush(Color.White))
+                {
+                    SizeF textSize = graphics.MeasureString("ORIGIN", font);
+                    RectangleF tagRect = new RectangleF(vertex.X - textSize.Width / 2f - 3f, vertex.Y - radius - 10f - textSize.Height, textSize.Width + 6f, textSize.Height);
+                    graphics.FillRectangle(tagBrush, tagRect);
+                    graphics.DrawString("ORIGIN", font, textBrush, tagRect.X + 3f, tagRect.Y);
+                }
+            }
+
+            // 2) Result of the last traversal
+            if (traversalResult == null) return;
+
+            if (traversalResult.OrderPosition.TryGetValue(vertex.Name, out int visitPosition))
+            {
+                float diameter = 22f;
+                RectangleF badgeRect = new RectangleF(vertex.X + radius * 0.8f - diameter / 2f, vertex.Y - radius * 0.8f - diameter / 2f, diameter, diameter);
+
+                using (Font font = new Font("Segoe UI", 8.25F, FontStyle.Bold))
+                using (SolidBrush badgeBrush = new SolidBrush(VisualConfig.TraversalBadgeColor))
+                using (SolidBrush textBrush = new SolidBrush(VisualConfig.TraversalBadgeTextColor))
+                using (StringFormat format = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
+                {
+                    graphics.FillEllipse(badgeBrush, badgeRect);
+                    graphics.DrawString(visitPosition.ToString(), font, textBrush, badgeRect, format);
+                }
+            }
+
+            if (traversalResult.Distances != null && traversalResult.Distances.TryGetValue(vertex.Name, out int distance))
+            {
+                string distanceText = $"d={distance}";
+
+                using (Font font = new Font("Segoe UI", 7.5F, FontStyle.Bold))
+                using (SolidBrush badgeBrush = new SolidBrush(VisualConfig.TraversalBadgeColor))
+                using (SolidBrush textBrush = new SolidBrush(VisualConfig.TraversalBadgeTextColor))
+                using (StringFormat format = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
+                {
+                    SizeF textSize = graphics.MeasureString(distanceText, font);
+                    float width = textSize.Width + 2f;
+                    float height = 16f;
+                    RectangleF badgeRect = new RectangleF(vertex.X - radius * 0.8f - width / 2f, vertex.Y - radius * 0.8f - height / 2f, width, height);
+                    graphics.FillRectangle(badgeBrush, badgeRect);
+                    graphics.DrawString(distanceText, font, textBrush, badgeRect, format);
+                }
+            }
+        }
+
         private static void DrawEdgeArrow(Graphics graphics, Pen edgePen, Vertex origin, Vertex destination)
         {
             double angle = Math.Atan2(destination.Y - origin.Y, destination.X - origin.X);
@@ -696,6 +825,7 @@ namespace Ruta_de_mapas
             string? selectedRemoveEdgeDestination = cmbRemoveEdgeDestination.Text;
             string? selectedAdjacencyA = cmbAdjacencyVertexA.Text;
             string? selectedAdjacencyB = cmbAdjacencyVertexB.Text;
+            string? selectedTraversalOrigin = cmbTraversalOrigin.Text;
 
             cmbOriginVertex.Items.Clear();
             cmbDestinationVertex.Items.Clear();
@@ -704,6 +834,7 @@ namespace Ruta_de_mapas
             cmbRemoveEdgeDestination.Items.Clear();
             cmbAdjacencyVertexA.Items.Clear();
             cmbAdjacencyVertexB.Items.Clear();
+            cmbTraversalOrigin.Items.Clear();
 
             for (int i = 0; i < vertices.Count; i++)
             {
@@ -715,6 +846,7 @@ namespace Ruta_de_mapas
                 cmbRemoveEdgeDestination.Items.Add(vertexName);
                 cmbAdjacencyVertexA.Items.Add(vertexName);
                 cmbAdjacencyVertexB.Items.Add(vertexName);
+                cmbTraversalOrigin.Items.Add(vertexName);
             }
 
             RestoreComboBoxSelection(cmbOriginVertex, selectedOrigin, 0);
@@ -724,6 +856,12 @@ namespace Ruta_de_mapas
             RestoreComboBoxSelection(cmbRemoveEdgeDestination, selectedRemoveEdgeDestination, vertices.Count > 1 ? 1 : 0);
             RestoreComboBoxSelection(cmbAdjacencyVertexA, selectedAdjacencyA, 0);
             RestoreComboBoxSelection(cmbAdjacencyVertexB, selectedAdjacencyB, vertices.Count > 1 ? 1 : 0);
+
+            // The default traversal origin is the first vertex created (index 0)
+            RestoreComboBoxSelection(cmbTraversalOrigin, selectedTraversalOrigin, 0);
+
+            // If the graph changed, the previous traversal is no longer valid
+            ClearTraversalMarks();
         }
 
         private static void RestoreComboBoxSelection(ComboBox comboBox, string? previousSelection, int defaultIndex)
@@ -757,13 +895,17 @@ namespace Ruta_de_mapas
             AdjustHorizontalPair(grpGraphDeletion, cmbRemoveEdgeOrigin, cmbRemoveEdgeDestination, horizontalMargin, controlSpacing);
             AdjustHorizontalPair(grpGraphAdjacency, cmbAdjacencyVertexA, cmbAdjacencyVertexB, horizontalMargin, controlSpacing);
             AdjustHorizontalPair(grpGraphAdjacency, btnCheckAdjacency, btnViewAdjacents, horizontalMargin, controlSpacing);
+            AdjustHorizontalPair(grpTraversals, btnBfs, btnDfs, horizontalMargin, controlSpacing);
 
-            int availableAdjacencyHeight = panelGraphOperations.ClientSize.Height - grpGraphAdjacency.Top - 12;
+            // Room is reserved below the Adjacency group for the Traversals group
+            int availableAdjacencyHeight = panelGraphOperations.ClientSize.Height - grpGraphAdjacency.Top - 12 - (grpTraversals.Height + 8);
             if (availableAdjacencyHeight >= 220)
             {
                 grpGraphAdjacency.Height = availableAdjacencyHeight;
                 lblAdjacencyResult.Height = Math.Max(80, grpGraphAdjacency.ClientSize.Height - lblAdjacencyResult.Top - 12);
             }
+
+            grpTraversals.Top = grpGraphAdjacency.Bottom + 8;
         }
 
         private static void AdjustHorizontalPair(Control container, Control leftControl, Control rightControl, int margin, int spacing)

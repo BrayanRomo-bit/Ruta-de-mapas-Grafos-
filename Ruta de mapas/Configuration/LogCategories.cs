@@ -13,5 +13,6 @@ namespace Ruta_de_mapas
         public const string Neighbors = "VECINOS";
         public const string GraphType = "TIPO GRAFO";
         public const string Clear = "LIMPIEZA";
+        public const string Traversal = "TRAVERSAL";
     }
 }

@@ -48,5 +48,10 @@ namespace Ruta_de_mapas
         public static readonly Color NegativeResultTextColor = Color.FromArgb(120, 40, 31);
         public static readonly Color NeutralResultBackgroundColor = Color.FromArgb(238, 242, 245);
         public static readonly Color NeutralResultTextColor = Color.FromArgb(45, 52, 54);
+
+        // Traversals (BFS / DFS): origin vertex marker and visit-order badges
+        public static readonly Color OriginRingColor = Color.FromArgb(243, 156, 18);
+        public static readonly Color TraversalBadgeColor = Color.FromArgb(45, 52, 54);
+        public static readonly Color TraversalBadgeTextColor = Color.White;
     }
 }

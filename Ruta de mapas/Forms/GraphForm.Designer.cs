@@ -11,6 +11,7 @@ namespace Ruta_de_mapas
         private GraphCanvasPanel panelGraphCanvas;
         private System.Windows.Forms.Panel panelCanvasFooter;
         private System.Windows.Forms.Label lblCanvasCoordinates;
+        private System.Windows.Forms.Label lblTraversalStatus;
 
         // Graph operations side panel (Right)
         private System.Windows.Forms.Panel panelGraphOperations;
@@ -41,6 +42,14 @@ namespace Ruta_de_mapas
         private System.Windows.Forms.Button btnCheckAdjacency;
         private System.Windows.Forms.Button btnViewAdjacents;
         private System.Windows.Forms.Label lblAdjacencyResult;
+
+        // 4. Traversals (BFS / DFS)
+        private System.Windows.Forms.GroupBox grpTraversals;
+        private System.Windows.Forms.Label lblTraversalOrigin;
+        private System.Windows.Forms.ComboBox cmbTraversalOrigin;
+        private System.Windows.Forms.Button btnClearTraversal;
+        private System.Windows.Forms.Button btnBfs;
+        private System.Windows.Forms.Button btnDfs;
 
         // Bottom log bar
         private System.Windows.Forms.ListBox lstGraphLog;
@@ -78,7 +87,14 @@ namespace Ruta_de_mapas
             panelGraphCanvas = new GraphCanvasPanel();
             panelCanvasFooter = new Panel();
             lblCanvasCoordinates = new Label();
+            lblTraversalStatus = new Label();
             panelGraphOperations = new Panel();
+            grpTraversals = new GroupBox();
+            btnDfs = new Button();
+            btnBfs = new Button();
+            btnClearTraversal = new Button();
+            cmbTraversalOrigin = new ComboBox();
+            lblTraversalOrigin = new Label();
             grpGraphAdjacency = new GroupBox();
             lblAdjacencyResult = new Label();
             btnViewAdjacents = new Button();
@@ -124,6 +140,7 @@ namespace Ruta_de_mapas
             panelCanvasFooter.SuspendLayout();
             panelGraphOperations.SuspendLayout();
             grpGraphAdjacency.SuspendLayout();
+            grpTraversals.SuspendLayout();
             grpGraphDeletion.SuspendLayout();
             grpGraphInsertion.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numEdgeWeight).BeginInit();
@@ -149,7 +166,7 @@ namespace Ruta_de_mapas
             // splitMainContainer.Panel2
             // 
             splitMainContainer.Panel2.Controls.Add(panelGraphOperations);
-            splitMainContainer.Size = new Size(1234, 774);
+            splitMainContainer.Size = new Size(1234, 819);
             splitMainContainer.SplitterDistance = 853;
             splitMainContainer.SplitterWidth = 5;
             splitMainContainer.TabIndex = 1;
@@ -163,16 +180,17 @@ namespace Ruta_de_mapas
             panelGraphCanvas.Location = new Point(0, 0);
             panelGraphCanvas.Margin = new Padding(3, 4, 3, 4);
             panelGraphCanvas.Name = "panelGraphCanvas";
-            panelGraphCanvas.Size = new Size(853, 741);
+            panelGraphCanvas.Size = new Size(853, 786);
             panelGraphCanvas.TabIndex = 0;
             // 
             // panelCanvasFooter
             // 
             panelCanvasFooter.BackColor = Color.FromArgb(241, 242, 246);
             panelCanvasFooter.BorderStyle = BorderStyle.FixedSingle;
+            panelCanvasFooter.Controls.Add(lblTraversalStatus);
             panelCanvasFooter.Controls.Add(lblCanvasCoordinates);
             panelCanvasFooter.Dock = DockStyle.Bottom;
-            panelCanvasFooter.Location = new Point(0, 741);
+            panelCanvasFooter.Location = new Point(0, 786);
             panelCanvasFooter.Margin = new Padding(3, 4, 3, 4);
             panelCanvasFooter.Name = "panelCanvasFooter";
             panelCanvasFooter.Size = new Size(853, 33);
@@ -189,9 +207,22 @@ namespace Ruta_de_mapas
             lblCanvasCoordinates.TabIndex = 0;
             lblCanvasCoordinates.Text = "Posición: (X: 0, Y: 0)";
             // 
+            // lblTraversalStatus
+            // 
+            lblTraversalStatus.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lblTraversalStatus.AutoEllipsis = true;
+            lblTraversalStatus.Font = new Font("Segoe UI Semibold", 8.25F, FontStyle.Bold);
+            lblTraversalStatus.ForeColor = Color.FromArgb(45, 52, 54);
+            lblTraversalStatus.Location = new Point(230, 7);
+            lblTraversalStatus.Name = "lblTraversalStatus";
+            lblTraversalStatus.Size = new Size(610, 19);
+            lblTraversalStatus.TabIndex = 1;
+            lblTraversalStatus.Text = "Traversals: add vertices (the default origin is the first one).";
+            // 
             // panelGraphOperations
             // 
             panelGraphOperations.AutoScroll = true;
+            panelGraphOperations.Controls.Add(grpTraversals);
             panelGraphOperations.Controls.Add(grpGraphAdjacency);
             panelGraphOperations.Controls.Add(grpGraphDeletion);
             panelGraphOperations.Controls.Add(grpGraphInsertion);
@@ -200,7 +231,7 @@ namespace Ruta_de_mapas
             panelGraphOperations.Margin = new Padding(3, 4, 3, 4);
             panelGraphOperations.Name = "panelGraphOperations";
             panelGraphOperations.Padding = new Padding(7, 8, 7, 8);
-            panelGraphOperations.Size = new Size(376, 774);
+            panelGraphOperations.Size = new Size(376, 819);
             panelGraphOperations.TabIndex = 0;
             // 
             // grpGraphAdjacency
@@ -218,7 +249,7 @@ namespace Ruta_de_mapas
             grpGraphAdjacency.Margin = new Padding(3, 4, 3, 4);
             grpGraphAdjacency.Name = "grpGraphAdjacency";
             grpGraphAdjacency.Padding = new Padding(3, 4, 3, 4);
-            grpGraphAdjacency.Size = new Size(362, 287);
+            grpGraphAdjacency.Size = new Size(362, 227);
             grpGraphAdjacency.TabIndex = 2;
             grpGraphAdjacency.TabStop = false;
             grpGraphAdjacency.Text = "4.2.2.3 Verificación de Adyacencia";
@@ -233,7 +264,7 @@ namespace Ruta_de_mapas
             lblAdjacencyResult.Location = new Point(11, 130);
             lblAdjacencyResult.Name = "lblAdjacencyResult";
             lblAdjacencyResult.Padding = new Padding(6);
-            lblAdjacencyResult.Size = new Size(339, 140);
+            lblAdjacencyResult.Size = new Size(339, 80);
             lblAdjacencyResult.TabIndex = 4;
             lblAdjacencyResult.Text = "Comprueba la adyacencia entre dos vértices o consulta los adyacentes de un vértice.";
             lblAdjacencyResult.TextAlign = ContentAlignment.MiddleCenter;
@@ -291,6 +322,96 @@ namespace Ruta_de_mapas
             cmbAdjacencyVertexA.Name = "cmbAdjacencyVertexA";
             cmbAdjacencyVertexA.Size = new Size(159, 28);
             cmbAdjacencyVertexA.TabIndex = 0;
+            // 
+            // grpTraversals
+            // 
+            grpTraversals.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            grpTraversals.BackColor = Color.White;
+            grpTraversals.Controls.Add(btnDfs);
+            grpTraversals.Controls.Add(btnBfs);
+            grpTraversals.Controls.Add(btnClearTraversal);
+            grpTraversals.Controls.Add(cmbTraversalOrigin);
+            grpTraversals.Controls.Add(lblTraversalOrigin);
+            grpTraversals.Font = new Font("Segoe UI Semibold", 8.75F, FontStyle.Bold);
+            grpTraversals.ForeColor = Color.Black;
+            grpTraversals.Location = new Point(7, 687);
+            grpTraversals.Margin = new Padding(3, 4, 3, 4);
+            grpTraversals.Name = "grpTraversals";
+            grpTraversals.Padding = new Padding(3, 4, 3, 4);
+            grpTraversals.Size = new Size(362, 118);
+            grpTraversals.TabIndex = 3;
+            grpTraversals.TabStop = false;
+            grpTraversals.Text = "Traversals (BFS / DFS)";
+            // 
+            // lblTraversalOrigin
+            // 
+            lblTraversalOrigin.AutoSize = true;
+            lblTraversalOrigin.Font = new Font("Segoe UI Semibold", 8.25F, FontStyle.Bold);
+            lblTraversalOrigin.ForeColor = Color.Black;
+            lblTraversalOrigin.Location = new Point(11, 35);
+            lblTraversalOrigin.Name = "lblTraversalOrigin";
+            lblTraversalOrigin.Size = new Size(50, 19);
+            lblTraversalOrigin.TabIndex = 0;
+            lblTraversalOrigin.Text = "Origin:";
+            // 
+            // cmbTraversalOrigin
+            // 
+            cmbTraversalOrigin.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            cmbTraversalOrigin.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbTraversalOrigin.Font = new Font("Segoe UI", 9F);
+            cmbTraversalOrigin.FormattingEnabled = true;
+            cmbTraversalOrigin.Location = new Point(72, 30);
+            cmbTraversalOrigin.Margin = new Padding(3, 4, 3, 4);
+            cmbTraversalOrigin.Name = "cmbTraversalOrigin";
+            cmbTraversalOrigin.Size = new Size(161, 28);
+            cmbTraversalOrigin.TabIndex = 1;
+            // 
+            // btnClearTraversal
+            // 
+            btnClearTraversal.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnClearTraversal.BackColor = Color.White;
+            btnClearTraversal.Cursor = Cursors.Hand;
+            btnClearTraversal.FlatStyle = FlatStyle.Flat;
+            btnClearTraversal.Font = new Font("Segoe UI Semibold", 8F, FontStyle.Bold);
+            btnClearTraversal.ForeColor = Color.Black;
+            btnClearTraversal.Location = new Point(243, 30);
+            btnClearTraversal.Margin = new Padding(3, 4, 3, 4);
+            btnClearTraversal.Name = "btnClearTraversal";
+            btnClearTraversal.Size = new Size(107, 28);
+            btnClearTraversal.TabIndex = 2;
+            btnClearTraversal.Text = "Clear marks";
+            btnClearTraversal.UseVisualStyleBackColor = false;
+            // 
+            // btnBfs
+            // 
+            btnBfs.BackColor = Color.FromArgb(9, 132, 227);
+            btnBfs.Cursor = Cursors.Hand;
+            btnBfs.FlatStyle = FlatStyle.Flat;
+            btnBfs.Font = new Font("Segoe UI Semibold", 8.25F, FontStyle.Bold);
+            btnBfs.ForeColor = Color.White;
+            btnBfs.Location = new Point(11, 66);
+            btnBfs.Margin = new Padding(3, 4, 3, 4);
+            btnBfs.Name = "btnBfs";
+            btnBfs.Size = new Size(160, 38);
+            btnBfs.TabIndex = 3;
+            btnBfs.Text = "BFS (Breadth-First)";
+            btnBfs.UseVisualStyleBackColor = false;
+            // 
+            // btnDfs
+            // 
+            btnDfs.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnDfs.BackColor = Color.FromArgb(108, 92, 231);
+            btnDfs.Cursor = Cursors.Hand;
+            btnDfs.FlatStyle = FlatStyle.Flat;
+            btnDfs.Font = new Font("Segoe UI Semibold", 8.25F, FontStyle.Bold);
+            btnDfs.ForeColor = Color.White;
+            btnDfs.Location = new Point(190, 66);
+            btnDfs.Margin = new Padding(3, 4, 3, 4);
+            btnDfs.Name = "btnDfs";
+            btnDfs.Size = new Size(160, 38);
+            btnDfs.TabIndex = 4;
+            btnDfs.Text = "DFS (Depth-First)";
+            btnDfs.UseVisualStyleBackColor = false;
             // 
             // grpGraphDeletion
             // 
@@ -512,7 +633,7 @@ namespace Ruta_de_mapas
             lstGraphLog.Font = new Font("Consolas", 8F);
             lstGraphLog.ForeColor = Color.FromArgb(223, 230, 233);
             lstGraphLog.FormattingEnabled = true;
-            lstGraphLog.Location = new Point(0, 841);
+            lstGraphLog.Location = new Point(0, 886);
             lstGraphLog.Margin = new Padding(3, 4, 3, 4);
             lstGraphLog.Name = "lstGraphLog";
             lstGraphLog.Size = new Size(1234, 90);
@@ -728,7 +849,7 @@ namespace Ruta_de_mapas
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1234, 931);
+            ClientSize = new Size(1234, 976);
             Controls.Add(splitMainContainer);
             Controls.Add(lstGraphLog);
             Controls.Add(panelTopBar);
@@ -745,6 +866,8 @@ namespace Ruta_de_mapas
             panelCanvasFooter.PerformLayout();
             panelGraphOperations.ResumeLayout(false);
             grpGraphAdjacency.ResumeLayout(false);
+            grpTraversals.ResumeLayout(false);
+            grpTraversals.PerformLayout();
             grpGraphDeletion.ResumeLayout(false);
             grpGraphInsertion.ResumeLayout(false);
             grpGraphInsertion.PerformLayout();
