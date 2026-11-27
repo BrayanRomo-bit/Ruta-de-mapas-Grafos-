@@ -14,14 +14,6 @@ namespace Ruta_de_mapas
         private const int DefaultWindowHeight = 470;
         private static readonly Color TableBackgroundColor = Color.FromArgb(248, 249, 250);
 
-        // Styles for unweighted edge (1)
-        private static readonly Color UnweightedCellColor = Color.FromArgb(224, 242, 254);
-        private static readonly Color UnweightedTextColor = Color.FromArgb(3, 105, 161);
-
-        // Styles for weighted edge (weight)
-        private static readonly Color WeightedCellColor = Color.FromArgb(212, 239, 223);
-        private static readonly Color WeightedTextColor = Color.FromArgb(20, 90, 50);
-
         private readonly BaseGraph currentGraph;
 
         public AdjacencyMatrixForm(BaseGraph graph)

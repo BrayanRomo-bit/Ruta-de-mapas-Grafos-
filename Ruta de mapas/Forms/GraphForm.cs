@@ -436,7 +436,7 @@ namespace Ruta_de_mapas
             }
 
             // The origin is the vertex selected in cmbTraversalOrigin (by default, the first vertex created)
-            TraversalResult result = useBfs ? TravesalAlgorithms.Bfs(ActiveGraph, originName) : TravesalAlgorithms.Dfs(ActiveGraph, originName);
+            TraversalResult result = useBfs ? TraversalAlgorithms.Bfs(ActiveGraph, originName) : TraversalAlgorithms.Dfs(ActiveGraph, originName);
             traversalResult = result;
 
             // One-line result in the canvas footer

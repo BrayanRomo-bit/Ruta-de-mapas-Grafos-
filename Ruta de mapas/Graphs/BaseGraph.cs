@@ -63,8 +63,6 @@ namespace Ruta_de_mapas
 
         public abstract string[,] GenerateTextAdjacencyMatrix(out string[] vertexNames);
 
-        public abstract int[,] GenerateAdjacencyMatrix(out string[] vertexNames);
-
         public virtual List<AdjacencyListEntry> GenerateAdjacencyList()
         {
             List<Vertex> allVertices = GetAllVertices();

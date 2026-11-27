@@ -327,40 +327,6 @@ namespace Ruta_de_mapas
             return adjacencyMatrix;
         }
 
-        public override int[,] GenerateAdjacencyMatrix(out string[] vertexNames)
-        {
-            int totalVertices = vertices.Count;
-            vertexNames = new string[totalVertices];
-            for (int i = 0; i < totalVertices; i++)
-            {
-                vertexNames[i] = vertices[i].Name;
-            }
-
-            int[,] adjacencyMatrix = new int[totalVertices, totalVertices];
-
-            for (int i = 0; i < edges.Count; i++)
-            {
-                Edge edge = edges[i];
-                int originIndex = vertices.IndexOf(edge.Origin);
-                int destinationIndex = vertices.IndexOf(edge.Destination);
-
-                if (originIndex != -1 && destinationIndex != -1)
-                {
-                    int value = (edge.IsWeighted && edge.Weight.HasValue)
-                        ? (int)Math.Round(edge.Weight.Value)
-                        : 1;
-
-                    adjacencyMatrix[originIndex, destinationIndex] = value;
-                    if (!IsDirected)
-                    {
-                        adjacencyMatrix[destinationIndex, originIndex] = value;
-                    }
-                }
-            }
-
-            return adjacencyMatrix;
-        }
-
         public override Vertex? FindVertex(string name)
         {
             if (string.IsNullOrWhiteSpace(name)) return null;

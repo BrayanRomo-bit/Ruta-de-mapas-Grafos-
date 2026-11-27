@@ -18,7 +18,7 @@ namespace Ruta_de_mapas
     ///
     /// Neighbors are visited in the order the vertices were created.
     /// </summary>
-    public static class TravesalAlgorithms
+    public static class TraversalAlgorithms
     {
         // ===============================================================
         //  BFS (breadth-first) with a QUEUE. The ORIGIN is the 'origin' parameter.

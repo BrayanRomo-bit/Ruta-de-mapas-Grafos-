@@ -41,14 +41,6 @@ namespace Ruta_de_mapas
         public static readonly Color HighlightedWeightBorderColor = Color.FromArgb(0, 184, 148);
         public static readonly Color HighlightedWeightTextColor = Color.FromArgb(20, 90, 50);
 
-        // Adjacency check result states
-        public static readonly Color PositiveResultBackgroundColor = Color.FromArgb(212, 239, 223);
-        public static readonly Color PositiveResultTextColor = Color.FromArgb(20, 90, 50);
-        public static readonly Color NegativeResultBackgroundColor = Color.FromArgb(250, 219, 216);
-        public static readonly Color NegativeResultTextColor = Color.FromArgb(120, 40, 31);
-        public static readonly Color NeutralResultBackgroundColor = Color.FromArgb(238, 242, 245);
-        public static readonly Color NeutralResultTextColor = Color.FromArgb(45, 52, 54);
-
         // Traversals (BFS / DFS): origin vertex marker and visit-order badges
         public static readonly Color OriginRingColor = Color.FromArgb(243, 156, 18);
         public static readonly Color TraversalBadgeColor = Color.FromArgb(45, 52, 54);

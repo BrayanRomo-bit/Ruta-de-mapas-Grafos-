@@ -116,7 +116,7 @@ classDiagram
         +double? Weight
     }
 
-    class TravesalAlgorithms {
+    class TraversalAlgorithms {
         <<static>>
         +Bfs(graph, origin)$ TraversalResult
         +Dfs(graph, origin)$ TraversalResult
@@ -144,10 +144,10 @@ classDiagram
     BaseGraph ..> Vertex
     BaseGraph ..> Edge
     GraphForm --> BaseGraph : usa polimórficamente
-    GraphForm ..> TravesalAlgorithms : ejecuta BFS/DFS
+    GraphForm ..> TraversalAlgorithms : ejecuta BFS/DFS
     GraphForm ..> AdjacencyMatrixForm : abre
     GraphForm ..> AdjacencyListForm : abre
-    TravesalAlgorithms ..> TraversalResult : retorna
+    TraversalAlgorithms ..> TraversalResult : retorna
 ```
 
 ---
@@ -250,7 +250,7 @@ Sea $V$ el número de vértices y $E$ el número de aristas:
 | `RemoveVertex` | $O(V + E \cdot k)$ | $O(V + E)$ | $O(V + E)$ | En `SimpleListGraph` recolecta $k$ aristas y llama `Remove` por cada una. |
 | `AreAdjacent` | $O(V + E)$ | $O(V + E)$ | $O(V + E)$ | Escaneo lineal sobre la lista de aristas. |
 | `GenerateTextAdjacencyMatrix` | $O(V^2 + E \cdot V)$ | $O(V^2 + E \cdot V)$ | $O(V^2 + E \cdot V)$ | Resuelve índices de origen/destino por cada arista. |
-| `Bfs` / `Dfs` (`TravesalAlgorithms`) | $O(V + E)$ | $O(V + E)$ | $O(V + E)$ | Prepara lista de adyacencia en tiempo lineal y recorre con cola/pila. |
+| `Bfs` / `Dfs` (`TraversalAlgorithms`) | $O(V + E)$ | $O(V + E)$ | $O(V + E)$ | Prepara lista de adyacencia en tiempo lineal y recorre con cola/pila. |
 
 ---
 
@@ -298,7 +298,7 @@ Ruta-de-mapas-Grafos-/
 └── Ruta de mapas/
     ├── Ruta de mapas.csproj       Proyecto WinExe, net10.0-windows, WinForms
     ├── Program.cs                 Punto de entrada (Main, STAThread)
-    ├── TraversalAlgorithms.cs     Algoritmos BFS y DFS (clase "TravesalAlgorithms")
+    ├── TraversalAlgorithms.cs     Algoritmos BFS y DFS (clase "TraversalAlgorithms")
     ├── TraversalResult.cs         Resultado de un recorrido (orden, distancias, no alcanzados)
     ├── Configuration/
     │   ├── LogCategories.cs       Categorías de la bitácora
